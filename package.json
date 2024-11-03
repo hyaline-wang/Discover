@@ -1,0 +1,27 @@
+{
+  "name": "emnavidiscover",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-shell": "^2",
+    "axios": "^1.7.7",
+    "element-plus": "^2.8.7",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "vue-tsc": "^2.0.22"
+  }
+}
