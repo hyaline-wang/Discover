@@ -27,8 +27,10 @@
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template #default="scope">
-                    <el-button  v-if="getOnlineStatus(scope.row) == 'Online'" @click="openWebPage(scope.row)" type="primary">连接</el-button>
-                    <div v-else>不可用</div>
+                    <div v-for="(ip,inter) in scope.row.ip_addresses">
+                        <el-button  v-if="getOnlineStatus(scope.row) == 'Online'" @click="openWebPage(scope.row,ip)" type="primary" style="width: 130px;margin-bottom: 3px;">连接 {{ inter }}</el-button>
+                        <div v-else>不可用</div>
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
@@ -51,7 +53,7 @@ function handleSubmit() {
     // 执行提交操作（可选）
     ready_to_connect.value = false; // 关闭对话框
 }
-function getOnlineStatus(device){
+function getOnlineStatus(device,ip){
     const now = Math.floor(Date.now() / 1000); // 获取当前时间的 UNIX 时间戳（秒）
     console.log(now - device.last_updated);
     if(now - device.last_updated < 10) {
@@ -88,12 +90,22 @@ onMounted(() => {
 
 });
 
-function openWebPage(device) {
-    const window_name = device.device_name;
+function openWebPage(device,ip) {
+    const window_name = device.device_name
+    for (const inter in device.ip_addresses) {
+        console.log(`${inter}: ${device.ip_addresses[inter]}`);
+    //     if (device.ip_addresses.hasOwnProperty(inter)) {
+    //     const ip = ipAddresses[inter];
+    //     console.log(`${inter}: ${ip}`);
+    // }
+    }
+
+    
   // 创建一个新的窗口实例
   const newWindow = new WebviewWindow('newWindow', {
     // url: 'http://emnavi.tech', // 新窗口的页面，可以是本地文件或远程URL
-    url: 'http://localhost:5173/login',
+    // url: 'http://localhost:5173/login',
+    url: 'http://' + ip,
     title: window_name,    // 窗口标题
     width: 600,             // 窗口宽度
     height: 400,            // 窗口高度
