@@ -46,6 +46,9 @@ fn find_broadcast_ips() -> Vec<IpAddr> {
     let default_interface = all_interfaces.iter().filter(|e| true);
     let mut valid_broadcasts = Vec::new();
     for ip in default_interface {
+        if(ip.ips.len() == 0) {
+            continue;
+        }
         let broadcast = ip.ips[0].broadcast();
         if broadcast != Ipv4Addr::new(255, 255, 255, 255) {
             valid_broadcasts.push(broadcast);
